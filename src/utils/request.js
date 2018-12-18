@@ -16,7 +16,7 @@ service.interceptors.request.use(
     // console.log('store.getters.uid:' + store.getters.uid)
     if (store.getters.token) {
       config.headers['token'] = getToken() // 让每个请求携带自定义token 请根据实际情况自行修改
-      config.cms = 'bst'
+      config.headers['cms'] = 'bst'
     }
     if (store.getters.uid) {
       config.headers['uid'] = getUid() // 让每个请求携带自定义uid 请根据实际情况自行修改

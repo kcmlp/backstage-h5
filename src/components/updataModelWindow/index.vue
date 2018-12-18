@@ -108,8 +108,7 @@ export default {
           // params.uid = uid
           // params.photoUrl = photoUrl
           // params.nickName = nickName
-          // updateAddArticle(params).then(response => {
-          // })   
+          // updateAddArticle(params).then(response => {// })
           // contentList
           // params.contentList = []
           // if (this.content !== null || this.content !== undefined || this.content !== '') {
@@ -121,34 +120,34 @@ export default {
           // addArticle response
           updateAddArticle(params).then(response => {
             // console.log('response success!')
-            // const client = new OSS({
-            //   secure: true,
-            //   endpoint: this.ossBulkInfo.region,
-            //   accessKeyId: this.ossBulkInfo.accessKeyId,
-            //   accessKeySecret: this.ossBulkInfo.accessKeySecret,
-            //   stsToken: this.ossBulkInfo.securityToken,
-            //   bucket: this.ossBulkInfo.bulkName
-            // })
-            // async function putBlob() {
-            //   try {
-            //     await client.put(photo.key, photo.blog)
-            //     // console.log(result)
-            //     const params = {}
-            //     params.artKey = response.datas.artKey
-            //     params.artId = response.datas.id
-            //     updateArticleStatus(params).then(response => {
-            router.push({ path: '/article/list' })
-            Message({
-              message: '修改用户信息成功',
-              type: 'success',
-              duration: 5 * 1000
+            const client = new OSS({
+              secure: true,
+              endpoint: this.ossBulkInfo.region,
+              accessKeyId: this.ossBulkInfo.accessKeyId,
+              accessKeySecret: this.ossBulkInfo.accessKeySecret,
+              stsToken: this.ossBulkInfo.securityToken,
+              bucket: this.ossBulkInfo.bulkName
             })
-          // })
-            //   } catch (e) {
-            //     // console.log(e)
-            //   }
-            // }
-            // putBlob()
+            async function putBlob() {
+              try {
+                await client.put(photo.key, photo.blog)
+                // console.log(result)
+                // const params = {}
+                // params.artKey = response.datas.artKey
+                // params.artId = response.datas.id
+                // updateArticleStatus(params).then(response => {
+                router.push({ path: '/article/list' })
+                Message({
+                  message: '修改用户信息成功',
+                  type: 'success',
+                  duration: 5 * 1000
+                })
+              // })
+              } catch (e) {
+                // console.log(e)
+              }
+            }
+            putBlob()
           })
         } else {
           // console.log('error submit!!')
@@ -254,5 +253,9 @@ export default {
 .croppa-container{
   background-color: #ffffff;
   border:1px solid #dcdcdc;
+}
+.icon-remove{
+  width:20px;
+  height:20px;
 }
 </style>

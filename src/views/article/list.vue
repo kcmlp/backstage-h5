@@ -42,11 +42,11 @@
 
     <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="fetchArticleData" />
 
-    <el-dialog :visible.sync="dialogPreviewVisible" :title="previewArticle.title" class="previewDialog" width="600px">
+    <!-- <el-dialog :visible.sync="dialogPreviewVisible" :title="previewArticle.title" class="previewDialog" width="600px">
       <div>
         <div class="previewContent" v-html="content" />
       </div>
-    </el-dialog>
+    </el-dialog> -->
   </div>
 </template>
 
@@ -66,7 +66,7 @@ export default {
       userInfo: {},
       list: null,
       listLoading: true,
-      dialogPreviewVisible: false,
+      // dialogPreviewVisible: false,
       previewArticle: {},
       content: '',
       total: 0,
@@ -79,12 +79,17 @@ export default {
   created() {
     this.fetchArticleData()
   },
+  // http://images.isouth.com/oss-cn-shenzhen.aliyuncs.com,isouth-medium,w2367068450_1545134030264
+  // https://undefined.undefined/oss-cn-shenzhen.aliyuncs.com,isouth-medium,w1_1545156615506
+  // https://isouth-medium.oss-cn-shenzhen.aliyuncs.com/w1_1545156615506
   methods: {
     fetchArticleData() {
       this.listLoading = true
       getArticleList('0', this.listQuery.page - 1).then(response => {
         this.list = response.datas.filter(function(article) {
-          article.photoUrl = getOssUrl(article.photoUrl, article.region, article.bulkName, 'photoUrl')
+          console.log('999999999999', article)
+          article.photoUrl = getOssUrl(article.photoUrl)
+          console.log('article.photoUrl', article.photoUrl)
           return true
         })
         this.total = this.list.length

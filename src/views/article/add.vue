@@ -242,7 +242,7 @@ export default {
       putBlob()
     },
     addImageBtn() {
-      this.$emit('test1', {paga:123})
+      this.$emit('test1', { phone : this.ruleForm.phone })
       // this.$emit('pagination', { page: 0, limit: 10 })
     }
   }

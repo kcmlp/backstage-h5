@@ -86,14 +86,18 @@ export default {
   methods: {
     // 接受子组件的值
     testdemo(val) {
-      console.log(val.paga)
+      console.log(val.phone)
+      this.fetchArticleData(val.phone)
     },
-    fetchArticleData() {
+    fetchArticleData(phone) {
+      if (!phone || Object) {
+        phone = ''
+      }
       this.listLoading = true
-      getArticleList(this.listQuery.page - 1).then(response => {
+      getArticleList(this.listQuery.page - 1, phone).then(response => {
         this.list = response.datas.list.filter(function(article) {
+          // console.log('article.photoUrl', article.photoUrl)
           article.photoUrl = getOssUrl(article.photoUrl)
-          console.log('article.photoUrl', article.photoUrl)
           return true
         })
         this.total = response.datas.count

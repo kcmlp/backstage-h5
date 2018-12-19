@@ -2,7 +2,7 @@
   <div class="app-container">
     <div class="filter-container">
       <!-- <el-button class="filter-item" type="primary" icon="el-icon-edit" @click="handleCreate">创建用户</el-button> -->
-      <add-user @test1='testdemo' @pagination="fetchArticleData"> </add-user>
+      <add-user @search='search' @pagination="fetchArticleData"> </add-user>
     </div>
 
     <el-table
@@ -85,7 +85,7 @@ export default {
   // https://isouth-medium.oss-cn-shenzhen.aliyuncs.com/w1_1545156615506 limit
   methods: {
     // 接受子组件的值
-    testdemo(val) {
+    search(val) {
       console.log(val.phone)
       this.fetchArticleData(val.phone)
     },

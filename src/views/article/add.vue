@@ -1,21 +1,27 @@
 <template>
   <el-form ref="ruleForm" :model="ruleForm" :rules="rules" label-width="130px" class="ruleForm">
-    <el-form-item label="昵称" prop="title">
-      <el-input v-model="ruleForm.title" placeholder="请输入昵称"/>
-    </el-form-item>
-    <el-form-item class="coverFormItem" label="头像" prop="cover">
-      <croppa
-        v-model="croppa"
-        :show-remove-button="true"
-        :width="100"
-        :height="100"
-        :placeholder-font-size="14"
-        :prevent-white-space="true"
-        placeholder="点击上传"/>
-    </el-form-item>
-    <el-form-item label="手机" prop="phone">
-      <el-input v-model="ruleForm.phone" placeholder="请输入手机号"/>
-    </el-form-item>
+    <div class="clearfix" >
+      <div style='float:left;width:600px'>
+        <el-form-item label="昵称" prop="title">
+          <el-input v-model="ruleForm.title" placeholder="请输入昵称"/>
+        </el-form-item>
+        <el-form-item label="手机" prop="phone">
+          <el-input v-model="ruleForm.phone" placeholder="请输入手机号"/>
+        </el-form-item>
+      </div>
+      <div style='float:left;'>
+        <el-form-item class="coverFormItem" label="头像" prop="cover">
+          <croppa
+            v-model="croppa"
+            :show-remove-button="true"
+            :width="100"
+            :height="100"
+            :placeholder-font-size="14"
+            :prevent-white-space="true"
+            placeholder="点击上传"/>
+        </el-form-item>
+      </div> 
+  </div>   
     <!-- <el-form-item label="文章内容" >
       <vue-editor
         id="editor"
@@ -25,9 +31,9 @@
         @imageAdded="handleImageAdded" />
     </el-form-item> -->
     <el-form-item>
+      <el-button type='success' @click="addImageBtn">搜索</el-button>
       <el-button type="primary" @click="submitForm('ruleForm')">立即创建</el-button>
-      <el-button @click="resetForm('ruleForm')">重置</el-button>
-      <!-- <el-button @click="addImageBtn">添加图片</el-button> -->
+      <el-button type="danger" @click="resetForm('ruleForm')">重置</el-button>
       <input
         id="addImageInput"
         type="file"
@@ -39,7 +45,7 @@
 </template>
 <script>
 // import store from '@/store'
-import router from '@/router/index'
+// import router from '@/router/index'
 import OSS from 'ali-oss'
 import { getOssBulkInfo, addArticle } from '@/api/article'
 import { getOssKey } from '@/utils/index'
@@ -131,18 +137,26 @@ export default {
                 // params.artKey = response.datas.artKey
                 // params.artId = response.datas.id
                 // updateArticleStatus(params).then(response => {
-                router.push({ path: '/article/list' })
+                // router.push({ path: '/article/list' })
                 Message({
                   message: '创建用户成功',
                   type: 'success',
-                  duration: 5 * 1000
+                  duration: 2 * 1000
                 })
+                // this.resetForm()
+                // this.$refs.ruleForm.resetFields()
+                // this.croppa.remove()
+                // this.ruleForm.phone = ''               
                 // })
               } catch (e) {
                 // console.log(e)
               }
             }
             putBlob()
+            this.$emit('pagination', { page: 0, limit: 10 })
+            this.$refs[formName].resetFields()
+            this.croppa.remove()
+            this.ruleForm.phone = ''
           })
         } else {
           // console.log('error submit!!')
@@ -164,6 +178,7 @@ export default {
       this.generateCoverBlob(formName)
     },
     resetForm(formName) {
+      console.log('formName', formName)
       this.$refs[formName].resetFields()
       this.croppa.remove()
       this.ruleForm.phone = ''
@@ -227,15 +242,23 @@ export default {
       putBlob()
     },
     addImageBtn() {
-      document.getElementById('addImageInput').click()
+      this.$emit('test1', {paga:123})
+      // this.$emit('pagination', { page: 0, limit: 10 })
     }
   }
 }
 </script>
 <style rel="stylesheet/scss" lang="scss">
 .ruleForm{
-  margin-top: 25px;
-  width: 800px;
+  width: 840px;
+}
+.clearfix:after {
+    visibility: hidden;
+    display: block;
+    font-size: 0;
+    content: " ";
+    clear: both;
+    height: 0;
 }
 .coverFormItem .el-form-item__content {
   line-height: 0px;

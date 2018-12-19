@@ -1,7 +1,8 @@
 <template>
   <div class="app-container">
     <div class="filter-container">
-      <el-button class="filter-item" type="primary" icon="el-icon-edit" @click="handleCreate">创建用户</el-button>
+      <!-- <el-button class="filter-item" type="primary" icon="el-icon-edit" @click="handleCreate">创建用户</el-button> -->
+      <add-user @test1='testdemo' @pagination="fetchArticleData"> </add-user>
     </div>
 
     <el-table
@@ -11,7 +12,7 @@
       border
       fit
       highlight-current-row>
-      <el-table-column :label="'昵称'" align="center" width="500">
+      <el-table-column :label="'昵称'" align="center" width="800">
         <template slot-scope="scope">
           {{ scope.row.nickName }}
         </template>
@@ -23,7 +24,7 @@
       </el-table-column>
       <el-table-column label="头像" align="center" width="160">
         <template slot-scope="scope">
-          <img :src="scope.row.photoUrl" width="126" height="72">
+          <img :src="scope.row.photoUrl" height="100">
         </template>
       </el-table-column>
       <!-- <el-table-column align="center" prop="created_at" label="创建时间" width="180">
@@ -40,8 +41,7 @@
       </el-table-column>
     </el-table>
 
-    <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="fetchArticleData" />
-
+    <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="fetchArticleData" />  
     <!-- <el-dialog :visible.sync="dialogPreviewVisible" :title="previewArticle.title" class="previewDialog" width="600px">
       <div>
         <div class="previewContent" v-html="content" />
@@ -54,13 +54,14 @@
 // import { getArticleList, getArticleView, deleteArticle } from '@/api/article'
 // import { getArticleList, updateAddArticle } from '@/api/article'
 import { getArticleList } from '@/api/article'
+import addUser from './add'
 // import { getUserBasicInfo } from '@/api/login'
 import { getOssUrl } from '@/utils/index'
 import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
 // import { Message, MessageBox } from 'element-ui'
 
 export default {
-  components: { Pagination },
+  components: { Pagination, addUser },
   data() {
     return {
       userInfo: {},
@@ -81,25 +82,29 @@ export default {
   },
   // http://images.isouth.com/oss-cn-shenzhen.aliyuncs.com,isouth-medium,w2367068450_1545134030264
   // https://undefined.undefined/oss-cn-shenzhen.aliyuncs.com,isouth-medium,w1_1545156615506
-  // https://isouth-medium.oss-cn-shenzhen.aliyuncs.com/w1_1545156615506
+  // https://isouth-medium.oss-cn-shenzhen.aliyuncs.com/w1_1545156615506 limit
   methods: {
+    // 接受子组件的值
+    testdemo(val) {
+      console.log(val.paga)
+    },
     fetchArticleData() {
       this.listLoading = true
-      getArticleList('0', this.listQuery.page - 1).then(response => {
-        this.list = response.datas.filter(function(article) {
-          console.log('999999999999', article)
+      getArticleList(this.listQuery.page - 1).then(response => {
+        this.list = response.datas.list.filter(function(article) {
           article.photoUrl = getOssUrl(article.photoUrl)
           console.log('article.photoUrl', article.photoUrl)
           return true
         })
-        this.total = this.list.length
+        this.total = response.datas.count
         console.log('this.list', this.list)
         this.listLoading = false
       })
+      // console.log('this.listQuery.limit', this.listQuery.limit)
     },
-    handleCreate() {
-      this.$router.push({ path: '/article/add' })
-    },
+    // handleCreate() {
+    //   this.$router.push({ path: '/article/add' })
+    // },
     handleUpData(uid, photoUrl, nickName, mobile) {
       this.$router.push({ path: '/updataModelWindow', query: { uid: uid, photoUrl: photoUrl, nickName: nickName, mobile: mobile }})
     }

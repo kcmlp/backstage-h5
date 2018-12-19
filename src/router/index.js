@@ -52,13 +52,13 @@ export const constantRouterMap = [
         name: 'list',
         component: () => import('@/views/article/list'),
         meta: { title: '用户列表', icon: 'table' }
-      },
-      {
-        path: 'add',
-        name: 'add',
-        component: () => import('@/views/article/add'),
-        meta: { title: '创建用户', icon: 'table' }
       }
+      // {
+      //   path: 'add',
+      //   name: 'add',
+      //   component: () => import('@/views/article/add'),
+      //   meta: { title: '创建用户', icon: 'table' }
+      // }
       // {
       //   path: 'draft',
       //   name: 'draft',

@@ -95,6 +95,7 @@ export default {
       }
       this.listLoading = true
       getArticleList(this.listQuery.page - 1, phone).then(response => {
+        console.log('不停地打转', response)
         this.list = response.datas.list.filter(function(article) {
           // console.log('article.photoUrl', article.photoUrl)
           article.photoUrl = getOssUrl(article.photoUrl)

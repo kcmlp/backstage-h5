@@ -17,6 +17,7 @@
           name="password"
           auto-complete="on"
           placeholder="请输入验证码"
+          ref = 'fouc'
           @keyup.enter.native="handleLogin" />
         <span class="show-pwd">
           <el-button :loading="smsCodeLoading" :disabled="smsCodeBtnDisabled" type="info" style="width:100%;" @click.native.prevent="getSmsCode">
@@ -91,6 +92,7 @@ export default {
       if (!isvalidUsername(this.loginForm.username)) {
         return
       }
+      this.$refs.fouc.focus()
       this.smsCodeLoading = true
       this.smsCodeBtnDisabled = true
       this.$store.dispatch('GetSmsCode', this.loginForm.username).then(() => {

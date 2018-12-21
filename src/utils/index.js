@@ -76,17 +76,11 @@ export function isExternal(path) {
   return /^(https?:|mailto:|tel:)/.test(path)
 }
 
-export function getOssUrl(key, region, bulkName, style) {
-  if (key === undefined || key == null || key === '') {
-    return ''
-  }
-  if (style === undefined || style == null || style === '') {
-    // return 'https://' + bulkName + '.' + region + '/' + key
-    return 'http://images.isouth.com/' + key
-  } else {
-    // return 'https://' + bulkName + '.' + region + '/' + key + '?x-oss-process=style/' + style
-    return 'http://images.isouth.com/' + key + '?x-oss-process=style/' + style
-  }
+export function getOssUrl(key) {
+  // console.log('eee', typeof key)   avatar
+  const newKey = String(key).split(',')
+  return 'https://' + newKey[1] + '.' + newKey[0] + '/' + newKey[2] + '?x-oss-process=style/avatar-large'
+  // return 'http://images.isouth.com/' + key + '?x-oss-process=style/' + style //'?x-oss-process=style/' + 'style
 }
 
 export function getOssKey() {

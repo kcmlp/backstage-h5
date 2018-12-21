@@ -1,11 +1,11 @@
 import request from '@/utils/request'
 
-export function getArticleList(type, page) {
+export function getArticleList(page, phone) {
   return request({
-    url: '/backstage/user/sec/getUser/' + type,
+    url: '/backstage/user/sec/getUser/' + page,
     method: 'get',
     headers: {
-      'page': page
+      'mobile': phone
     }
   })
 }

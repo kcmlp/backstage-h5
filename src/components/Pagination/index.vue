@@ -72,12 +72,14 @@ export default {
     }
   },
   methods: {
+    //  填写内容 返回
     handleSizeChange(val) {
       this.$emit('pagination', { page: this.currentPage, limit: val })
       if (this.autoScroll) {
         scrollTo(0, 800)
       }
     },
+    // 点击 翻页按钮
     handleCurrentChange(val) {
       this.$emit('pagination', { page: val, limit: this.pageSize })
       if (this.autoScroll) {

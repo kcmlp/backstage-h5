@@ -1,12 +1,9 @@
 import request from '@/utils/request'
 
-export function getArticleList(page, phone) {
+export function getArticleList(page) {
   return request({
     url: '/backstage/user/sec/getUser/' + page,
-    method: 'get',
-    headers: {
-      'mobile': phone
-    }
+    method: 'get'
   })
 }
 export function getOssBulkInfo() {

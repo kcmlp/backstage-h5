@@ -1,10 +1,22 @@
 <template>
-<div style='width:100%;height:100%;background:#efefef;'>
-    <el-form ref="ruleForm" :model="ruleForm" :rules="rules" label-width="130px" class="ruleForms">
-      <el-form-item label="昵称" prop="title">
-        <el-input v-model="ruleForm.title" :placeholder="this.$route.query.nickName"/>
+  <div style="width:100%;height:100%;background:#efefef;">
+    <el-form 
+      ref="ruleForm" 
+      :model="ruleForm" 
+      :rules="rules" 
+      label-width="130px" 
+      class="ruleForms">
+      <el-form-item 
+        label="昵称" >
+        <el-input 
+          v-model="ruleForm.title" 
+          :placeholder="this.$route.query.nickName"
+          :disabled="true"/>
       </el-form-item>
-      <el-form-item class="coverFormItem" label="头像" prop="cover">
+      <el-form-item 
+        class="coverFormItem" 
+        label="头像" 
+        prop="cover">
         <croppa
           v-model="croppa"
           :show-remove-button="true"
@@ -14,11 +26,18 @@
           :prevent-white-space="true"
           placeholder="点击上传"/>
       </el-form-item>
-      <el-form-item label="手机" prop="phone">
-        <el-input v-model="ruleForm.phone" :placeholder="this.$route.query.mobile"/>
+      <el-form-item 
+        label="手机" 
+        prop="phone">
+        <el-input 
+          v-model="ruleForm.phone" 
+          :placeholder="this.$route.query.mobile"
+          :disabled="true"/>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="submitForm('ruleForm', uid, photoUrl, nickName)">立即更新</el-button>
+        <el-button 
+          type="primary" 
+          @click="submitForm('ruleForm', uid, photoUrl, nickName)">立即更新</el-button>
         <!-- <el-button @click="resetForm('ruleForm')">重置</el-button> -->
         <!-- <el-button @click="addImageBtn">添加图片</el-button>-->
         <input
@@ -29,7 +48,7 @@
           @change="addImageInputClick">
       </el-form-item>
     </el-form>
-</div>  
+  </div>  
 </template>
 <script>
 // import store from '@/store'
@@ -92,7 +111,7 @@ export default {
         if (valid) {
           const params = {}
           // title
-          // params.title = this.ruleForm.title
+
           params.uid = this.uid
           params.photoUrl = this.photoUrl
           params.nickName = this.nickName
@@ -102,23 +121,7 @@ export default {
           photo.blog = this.ruleForm.cover
           ossPhotoArr.push(photo)
           params.photoUrl = photo.key
-          // this.generateCoverBlob(formName)
-          // console.log(uid, photoUrl, nickName)
-          // const params = {}
-          // params.uid = uid
-          // params.photoUrl = photoUrl
-          // params.nickName = nickName
-          // updateAddArticle(params).then(response => {// })
-          // contentList
-          // params.contentList = []
-          // if (this.content !== null || this.content !== undefined || this.content !== '') {
-          //   const con = {}
-          //   con.t = 0
-          //   con.v = '[MQL_RichMedia]' + this.content
-          //   params.contentList.push(con)
-          // }
-          // addArticle response
-          updateAddArticle(params).then(response => {
+          updateAddArticle(params).then( () => {
             // console.log('response success!')
             const client = new OSS({
               secure: true,
@@ -131,18 +134,12 @@ export default {
             async function putBlob() {
               try {
                 await client.put(photo.key, photo.blog)
-                // console.log(result)
-                // const params = {}
-                // params.artKey = response.datas.artKey
-                // params.artId = response.datas.id
-                // updateArticleStatus(params).then(response => {
                 router.push({ path: '/article/list' })
                 Message({
                   message: '修改用户信息成功',
                   type: 'success',
                   duration: 5 * 1000
                 })
-              // })
               } catch (e) {
                 // console.log(e)
               }
@@ -155,6 +152,7 @@ export default {
         }
       })
     },
+    // 图片 验证是否有
     generateCoverBlob(formName) {
       this.croppa.generateBlob((blob) => {
         // console.log('generateBlob')

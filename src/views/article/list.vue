@@ -2,7 +2,9 @@
   <div class="app-container">
     <div class="filter-container">
       <!-- <el-button class="filter-item" type="primary" icon="el-icon-edit" @click="handleCreate">创建用户</el-button> -->
-      <add-user @search='search' @pagination="fetchArticleData"> </add-user>
+      <add-user 
+        @test1="testdemo" 
+        @pagination="fetchArticleData"/>
     </div>
 
     <el-table
@@ -12,19 +14,29 @@
       border
       fit
       highlight-current-row>
-      <el-table-column :label="'昵称'" align="center" width="800">
+      <el-table-column 
+        :label="'昵称'" 
+        align="center" 
+        width="800">
         <template slot-scope="scope">
           {{ scope.row.nickName }}
         </template>
       </el-table-column>
-      <el-table-column label="手机号" align="center">
+      <el-table-column 
+        label="手机号" 
+        align="center">
         <template slot-scope="scope">
           <span>{{ scope.row.mobile }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="头像" align="center" width="160">
+      <el-table-column 
+        label="头像" 
+        align="center" 
+        width="160">
         <template slot-scope="scope">
-          <img :src="scope.row.photoUrl" height="100">
+          <img 
+            :src="scope.row.photoUrl" 
+            height="100">
         </template>
       </el-table-column>
       <!-- <el-table-column align="center" prop="created_at" label="创建时间" width="180">
@@ -32,17 +44,29 @@
           <span>{{ scope.row.ca }}</span>
         </template>
       </el-table-column> -->
-      <el-table-column label="操作" align="center" width="150" class-name="small-padding fixed-width">
+      <el-table-column 
+        label="操作" 
+        align="center" 
+        width="150" 
+        class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <!-- <el-button type="primary" size="mini" @click="handlePreview(scope.row)"> 预览 </el-button> -->
           <!-- <el-button type="danger" size="mini" @click="handleDelete(scope.row)"> 删除 </el-button> -->
-          <el-button type="primary" size="mini" @click="handleUpData(scope.row.uid,scope.row.photoUrl,scope.row.nickName,scope.row.mobile)"> 更新 </el-button>
+          <el-button 
+            type="primary" 
+            size="mini" 
+            @click="handleUpData(scope.row.uid,scope.row.photoUrl,scope.row.nickName,scope.row.mobile)"> 更新 </el-button>
         </template>
       </el-table-column>
     </el-table>
 
-    <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="fetchArticleData" />  
-    <!-- <el-dialog :visible.sync="dialogPreviewVisible" :title="previewArticle.title" class="previewDialog" width="600px">
+    <pagination 
+      v-show="total>0" 
+      :total="total" 
+      :page.sync="listQuery.page" 
+      :limit.sync="listQuery.limit" 
+      @pagination="fetchArticleData" />  
+      <!-- <el-dialog :visible.sync="dialogPreviewVisible" :title="previewArticle.title" class="previewDialog" width="600px">
       <div>
         <div class="previewContent" v-html="content" />
       </div>
@@ -85,20 +109,15 @@ export default {
   // https://isouth-medium.oss-cn-shenzhen.aliyuncs.com/w1_1545156615506 limit
   methods: {
     // 接受子组件的值
-    search(val) {
-      console.log(val.phone)
-      this.fetchArticleData(val.phone)
+    testdemo(val) {
+      console.log(val.paga)
     },
-    fetchArticleData(phone) {
-      if (!phone || Object) {
-        phone = ''
-      }
+    fetchArticleData() {
       this.listLoading = true
-      getArticleList(this.listQuery.page - 1, phone).then(response => {
-        console.log('不停地打转', response)
+      getArticleList(this.listQuery.page - 1).then(response => {
         this.list = response.datas.list.filter(function(article) {
-          // console.log('article.photoUrl', article.photoUrl)
           article.photoUrl = getOssUrl(article.photoUrl)
+          console.log('article.photoUrl', article.photoUrl)
           return true
         })
         this.total = response.datas.count

@@ -79,6 +79,7 @@ export function isExternal(path) {
 export function getOssUrl(key) {
   // console.log('eee', typeof key)   avatar
   const newKey = String(key).split(',')
+  console.log(888888,key)
   return 'https://' + newKey[1] + '.' + newKey[0] + '/' + newKey[2] + '?x-oss-process=style/avatar-large'
   // return 'http://images.isouth.com/' + key + '?x-oss-process=style/' + style //'?x-oss-process=style/' + 'style
 }

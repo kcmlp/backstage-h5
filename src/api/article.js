@@ -1,11 +1,14 @@
 import request from '@/utils/request'
 
-export function getArticleList(page, phone) {
+export function getArticleList(page,mobile) {
+  if(!mobile || typeof mobile == 'object'){
+    mobile = ''
+ }
   return request({
     url: '/backstage/user/sec/getUser/' + page,
     method: 'get',
     headers: {
-      'mobile': phone
+      mobile:mobile
     }
   })
 }

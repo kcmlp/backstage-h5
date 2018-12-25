@@ -1,16 +1,32 @@
 <template>
-  <el-form ref="ruleForm" :model="ruleForm" :rules="rules" label-width="130px" class="ruleForm">
+  <el-form 
+    ref="ruleForm" 
+    :model="ruleForm" 
+    :rules="rules" 
+    label-width="130px" 
+    class="ruleForm">
     <div class="clearfix" >
-      <div style='float:left;width:600px'>
-        <el-form-item label="昵称" prop="title">
-          <el-input v-model="ruleForm.title" placeholder="请输入昵称"/>
+      <div style="float:left;width:600px;">
+        <el-form-item 
+          label="昵称" 
+          prop="title">
+          <el-input 
+            v-model="ruleForm.title" 
+            placeholder="请输入昵称"/>
         </el-form-item>
-        <el-form-item label="手机" prop="phone">
-          <el-input v-model="ruleForm.phone" placeholder="请输入手机号"/>
+        <el-form-item 
+          label="手机" 
+          prop="phone">
+          <el-input 
+            v-model="ruleForm.phone" 
+            placeholder="请输入手机号"/>
         </el-form-item>
       </div>
-      <div style='float:left;'>
-        <el-form-item class="coverFormItem" label="头像" prop="cover">
+      <div style="float:left;">
+        <el-form-item 
+          class="coverFormItem" 
+          label="头像" 
+          prop="cover">
           <croppa
             v-model="croppa"
             :show-remove-button="true"
@@ -21,19 +37,18 @@
             placeholder="点击上传"/>
         </el-form-item>
       </div> 
-  </div>   
-    <!-- <el-form-item label="文章内容" >
-      <vue-editor
-        id="editor"
-        v-model="content"
-        :editor-toolbar="customVueEditor"
-        use-custom-image-handler
-        @imageAdded="handleImageAdded" />
-    </el-form-item> -->
+    </div>   
+
     <el-form-item>
-      <el-button type='success' @click="addImageBtn">搜索</el-button>
-      <el-button type="primary" @click="submitForm('ruleForm')">立即创建</el-button>
-      <el-button type="danger" @click="resetForm('ruleForm')">重置</el-button>
+      <el-button 
+        type="success" 
+        @click="addImageBtn">搜索</el-button>
+      <el-button 
+        type="primary" 
+        @click="submitForm('ruleForm')">立即创建</el-button>
+      <el-button 
+        type="danger" 
+        @click="resetForm('ruleForm')">重置</el-button>
       <input
         id="addImageInput"
         type="file"
@@ -242,8 +257,7 @@ export default {
       putBlob()
     },
     addImageBtn() {
-      this.$emit('search', { phone : this.ruleForm.phone })
-      // this.$emit('pagination', { page: 0, limit: 10 })
+      this.$emit('test1', {mobile:this.ruleForm.phone})
     }
   }
 }

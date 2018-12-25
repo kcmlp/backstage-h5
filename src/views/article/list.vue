@@ -4,7 +4,7 @@
       <!-- <el-button class="filter-item" type="primary" icon="el-icon-edit" @click="handleCreate">创建用户</el-button> -->
       <add-user 
         @test1="testdemo" 
-        @pagination="fetchArticleData"/>
+      />
     </div>
 
     <el-table
@@ -55,7 +55,7 @@
           <el-button 
             type="primary" 
             size="mini" 
-            @click="handleUpData(scope.row.uid,scope.row.photoUrl,scope.row.nickName,scope.row.mobile)"> 更新 </el-button>
+            @click="handleUpData(scope.row.uid,scope.row.photoKey,scope.row.nickName,scope.row.mobile)"> 更新 </el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -107,17 +107,23 @@ export default {
   // http://images.isouth.com/oss-cn-shenzhen.aliyuncs.com,isouth-medium,w2367068450_1545134030264
   // https://undefined.undefined/oss-cn-shenzhen.aliyuncs.com,isouth-medium,w1_1545156615506
   // https://isouth-medium.oss-cn-shenzhen.aliyuncs.com/w1_1545156615506 limit
-  methods: {
+   methods: { 
     // 接受子组件的值
     testdemo(val) {
-      console.log(val.paga)
+      this.fetchArticleData(val.mobile) 
     },
-    fetchArticleData() {
+    async fetchArticleData(mobile) {
+      console.log('mobile',typeof mobile)
+        if(!mobile || typeof mobile == 'object'){
+           mobile = ''
+        }
       this.listLoading = true
-      getArticleList(this.listQuery.page - 1).then(response => {
+      await getArticleList(this.listQuery.page - 1,mobile).then(response => {
         this.list = response.datas.list.filter(function(article) {
           article.photoUrl = getOssUrl(article.photoUrl)
-          console.log('article.photoUrl', article.photoUrl)
+          // https://isouth-medium.oss-cn-shenzhen.aliyuncs.com/
+          article.photoKey = article.photoUrl.split('https://isouth-medium.oss-cn-shenzhen.aliyuncs.com/')[1].split('?x-oss-process=style/avatar-large')[0]
+          // console.log('article.photoUrl', )
           return true
         })
         this.total = response.datas.count

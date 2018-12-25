@@ -11,9 +11,10 @@
         <el-input 
           v-model="ruleForm.title" 
           :placeholder="this.$route.query.nickName"
-          :disabled="true"/>
+        />
       </el-form-item>
       <el-form-item 
+        ref="imgruleForm" 
         class="coverFormItem" 
         label="头像" 
         prop="cover">
@@ -54,7 +55,7 @@
 // import store from '@/store'
 import router from '@/router/index'
 import OSS from 'ali-oss'
-import { getOssBulkInfo, addArticle, updateAddArticle } from '@/api/article'
+import { getOssBulkInfo, updateAddArticle } from '@/api/article'
 import { getOssKey } from '@/utils/index'
 import { Message } from 'element-ui'
 // import { VueEditor } from 'vue2-editor'this.$route.query.uid, this.$route.query.photoUrl, this.$route.query.nickName
@@ -73,6 +74,7 @@ export default {
       uid: this.$route.query.uid,
       photoUrl: this.$route.query.photoUrl,
       nickName: this.$route.query.nickName,
+      newtitle:'',
       ruleForm: {
         title: '',
         cover: '',
@@ -95,6 +97,11 @@ export default {
       croppa: {}
     }
   },
+  watch:{
+    newtitle(val){
+      console.log(val)
+    }
+  },
   created() {
     vm = this
     this.getOssBulkInfo()
@@ -105,23 +112,45 @@ export default {
         this.ossBulkInfo = response.datas.ossBulkInfo
       })
     },
-    addArticle(formName) {
+    addArticle() {
+      // console.log(999999999999,this.croppa.generateDataUrl())
       const ossPhotoArr = []
-      this.$refs[formName].validate((valid) => {
-        if (valid) {
+
           const params = {}
           // title
-
           params.uid = this.uid
           params.photoUrl = this.photoUrl
-          params.nickName = this.nickName
-          // cover
+          params.nickName = !this.ruleForm.title ? this.nickName : this.ruleForm.title
+                // 上传图片给  params.photoUrl 重新赋值
+      // this.$refs.imgruleForm.validate((valid) => {
+      if(this.croppa.generateDataUrl()) {
+        // console.log()
+        // if (valid) {
+                  // cover
           const photo = {}
           photo.key = getOssKey()
+          this.newphotoKey = getOssKey()
+
           photo.blog = this.ruleForm.cover
+          this.photoBlog = this.ruleForm.cover
+          
           ossPhotoArr.push(photo)
-          params.photoUrl = photo.key
+          // console.log('photo.key',photo.key)
+          // console.log('this.photoUrl',this.photoUrl)
+          params.photoUrl = photo.key 
+        // } else {
+        //   // console.log('error submit!!')
+        //   return false
+        // }
+      // })
+      }
+
           updateAddArticle(params).then( () => {
+            // console.log(000,photo.key)
+            // console.log(111,photo.blog)
+            // uid: 用户id
+            // nickName : 礼物id
+            // photoUrl : 礼物数量
             // console.log('response success!')
             const client = new OSS({
               secure: true,
@@ -131,26 +160,38 @@ export default {
               stsToken: this.ossBulkInfo.securityToken,
               bucket: this.ossBulkInfo.bulkName
             })
-            async function putBlob() {
-              try {
-                await client.put(photo.key, photo.blog)
+            // 昵称是否输入 
+            // if(this.ruleForm.title ==''){
+            //     router.push({ path: '/article/list' })
+            //     Message({
+            //       message: '没有修改内容',
+            //       type: 'success',
+            //       duration: 5 * 1000
+            //     })                
+            // }          
+            // async function putBlob() { 
+              // console.log(0000000,photo.key)
+              // try {
+                client.put(this.newphotoKey , this.photoBlog)
                 router.push({ path: '/article/list' })
                 Message({
                   message: '修改用户信息成功',
                   type: 'success',
                   duration: 5 * 1000
                 })
-              } catch (e) {
-                // console.log(e)
-              }
-            }
-            putBlob()
+              // } catch (e) {
+              //   // console.log(e)
+              //   router.push({ path: '/article/list' })
+              //   Message({
+              //     message: '没有修改头像',
+              //     type: 'success',
+              //     duration: 5 * 1000
+              //   })
+              // }
+             
+            // }
+            // putBlob()
           })
-        } else {
-          // console.log('error submit!!')
-          return false
-        }
-      })
     },
     // 图片 验证是否有
     generateCoverBlob(formName) {
@@ -162,42 +203,8 @@ export default {
       }, 'image/jpeg', 1)
       // this.$router.push({ path: '/article/list' })
     },
-    submitForm(formName, uid, photoUrl, nickName) {
+    submitForm(formName) {
       this.generateCoverBlob(formName)
-    },
-    // resetForm(formName) {
-    //   this.$refs[formName].resetFields()
-    //   this.croppa.remove()
-    //   this.content = ''
-    // },
-    handleImageAdded: function(file, Editor, cursorLocation, resetUploader) {
-      // console.log('handleImageAdded')
-      // console.log(this.ossBulkInfo)
-      const client = new OSS({
-        secure: true,
-        endpoint: this.ossBulkInfo.region,
-        accessKeyId: this.ossBulkInfo.accessKeyId,
-        accessKeySecret: this.ossBulkInfo.accessKeySecret,
-        stsToken: this.ossBulkInfo.securityToken,
-        bucket: this.ossBulkInfo.bulkName
-      })
-      async function putBlob() {
-        try {
-          const key = getOssKey()
-          const result = await client.put(key, file)
-          // console.log(result)
-          Editor.insertEmbed(cursorLocation, 'image', result.url)
-          // console.log(vm.content)
-        } catch (e) {
-          // console.log(e)
-          Message({
-            message: '图片添加失败',
-            type: 'error',
-            duration: 5 * 1000
-          })
-        }
-      }
-      putBlob()
     },
     addImageInputClick() {
       const imageFile = document.getElementById('addImageInput').files[0]
@@ -236,6 +243,11 @@ export default {
 </script>
 
 <style rel="stylesheet/scss" lang="scss">
+.el-form-item.is-required .el-form-item__label:before {
+    content: '';
+    color: #f56c6c;
+    margin-right: 4px;
+}
 .ruleForms{
     position: absolute;
     left: 50%;

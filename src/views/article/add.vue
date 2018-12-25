@@ -38,14 +38,7 @@
         </el-form-item>
       </div> 
     </div>   
-    <!-- <el-form-item label="文章内容" >
-      <vue-editor
-        id="editor"
-        v-model="content"
-        :editor-toolbar="customVueEditor"
-        use-custom-image-handler
-        @imageAdded="handleImageAdded" />
-    </el-form-item> -->
+
     <el-form-item>
       <el-button 
         type="success" 
@@ -264,8 +257,7 @@ export default {
       putBlob()
     },
     addImageBtn() {
-      this.$emit('test1', {paga:123})
-      // this.$emit('pagination', { page: 0, limit: 10 })
+      this.$emit('test1', {mobile:this.ruleForm.phone})
     }
   }
 }

@@ -1,9 +1,15 @@
 import request from '@/utils/request'
 
-export function getArticleList(page) {
+export function getArticleList(page,mobile) {
+  if(!mobile || typeof mobile == 'object'){
+    mobile = ''
+ }
   return request({
     url: '/backstage/user/sec/getUser/' + page,
-    method: 'get'
+    method: 'get',
+    headers: {
+      mobile:mobile
+    }
   })
 }
 export function getOssBulkInfo() {

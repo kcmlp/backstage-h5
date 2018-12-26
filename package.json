@@ -87,7 +87,6 @@
     "not ie <= 8"
   ],
   "scripts": {
-    "lint": "node_modules/.bin/eslint --ext .js src index.js -c .eslintrc.js -f checkstyle > eslint.xml",
-    "start": "node node_modules/react-native/local-cli/cli.js start"
+    "lint": "node_modules/.bin/eslint --ext .js src index.js -c .eslintrc.js -f checkstyle > eslint.xml"
   }
 }

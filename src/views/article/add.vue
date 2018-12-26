@@ -134,7 +134,7 @@ export default {
           //   params.contentList.push(con)
           // }
           // addArticle response
-          addArticle(params).then(response => {
+          addArticle(params).then( () => {
             // console.log('response success!')
             const client = new OSS({
               secure: true,
@@ -188,17 +188,15 @@ export default {
       }, 'image/jpeg', 1)
     },
     submitForm(formName) {
-      console.log('formName', formName)
       // cover
       this.generateCoverBlob(formName)
     },
     resetForm(formName) {
-      console.log('formName', formName)
       this.$refs[formName].resetFields()
       this.croppa.remove()
       this.ruleForm.phone = ''
     },
-    handleImageAdded: function(file, Editor, cursorLocation, resetUploader) {
+    handleImageAdded: function(file, Editor, cursorLocation) {
       // console.log('handleImageAdded')
       // console.log(this.ossBulkInfo)
       const client = new OSS({

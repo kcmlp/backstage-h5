@@ -113,7 +113,6 @@ export default {
       this.fetchArticleData(val.mobile) 
     },
     async fetchArticleData(mobile) {
-      console.log('mobile',typeof mobile)
         if(!mobile || typeof mobile == 'object'){
            mobile = ''
         }
@@ -127,7 +126,6 @@ export default {
           return true
         })
         this.total = response.datas.count
-        console.log('this.list', this.list)
         this.listLoading = false
       })
       // console.log('this.listQuery.limit', this.listQuery.limit)

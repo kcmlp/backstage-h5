@@ -29,8 +29,8 @@ const user = {
   },
 
   actions: {
-    // 后端 登出
-    LogOut({ commit, state }) {
+    // 后端 登出state
+    LogOut(commit) {
       return new Promise(resolve => {
         commit('SET_TOKEN', '')
         removeToken()
@@ -52,9 +52,9 @@ const user = {
     },
 
     // 获取短信验证码
-    GetSmsCode({ commit }, mobile) {
+    GetSmsCode(commit, mobile) {
       return new Promise((resolve, reject) => {
-        getSmsCode(mobile).then(response => {
+        getSmsCode(mobile).then( ()=> {
           resolve()
         }).catch(error => {
           reject(error)

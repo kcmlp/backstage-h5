@@ -98,8 +98,8 @@ export default {
     }
   },
   watch:{
-    newtitle(val){
-      console.log(val)
+    newtitle(){
+      // console.log(val)
     }
   },
   created() {
@@ -138,11 +138,6 @@ export default {
           // console.log('photo.key',photo.key)
           // console.log('this.photoUrl',this.photoUrl)
           params.photoUrl = photo.key 
-        // } else {
-        //   // console.log('error submit!!')
-        //   return false
-        // }
-      // })
       }
 
           updateAddArticle(params).then( () => {

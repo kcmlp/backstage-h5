@@ -10,8 +10,8 @@
     "build": "node build/build.js",
     "tbuild": "node build/webpack.dev.conf.js",
     "build:report": "npm_config_report=true npm run build",
-    "lint": "eslint --ext .js,.vue src",
     "test": "npm run lint",
+    "lint": "node_modules/.bin/eslint --ext .js src index.js -c .eslintrc.js -f checkstyle > eslint.xml",
     "svgo": "svgo -f src/icons/svg --config=src/icons/svgo.yml"
   },
   "dependencies": {
@@ -85,8 +85,5 @@
     "> 1%",
     "last 2 versions",
     "not ie <= 8"
-  ],
-  "scripts": {
-    "lint": "node_modules/.bin/eslint --ext .js src index.js -c .eslintrc.js -f checkstyle > eslint.xml"
-  }
+  ]
 }

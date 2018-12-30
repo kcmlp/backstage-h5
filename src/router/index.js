@@ -70,6 +70,18 @@ export const constantRouterMap = [
       }
     ]
   },
+  {
+    path: '/version',
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        name: 'index',
+        component: () => import('@/views/version/index'),
+        meta: { title: '版本设置', icon: 'table' }
+      }
+    ]
+  },
   { path: '*', redirect: '/404', hidden: true }
 ]
 

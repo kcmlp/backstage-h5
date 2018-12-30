@@ -118,7 +118,8 @@
         <el-button @click="dialogFormVisible = false">取消</el-button>
         <el-button
           type="primary"
-          @click="dialogStatus==='create'?createData():updateData()">确定</el-button>
+          @click="dialogStatus==='create'?createData():updateData()">确定
+        </el-button>
       </div>
     </el-dialog>
   </div>
@@ -134,11 +135,6 @@
       return {
         list: null,
         listLoading: true,
-        total: 0,
-        listQuery: {
-          page: 1,
-          limit: 10
-        },
         //dialog
         dialogFormVisible: false,
         dialogStatus: '',
@@ -156,8 +152,8 @@
         rules: {
           caption: [{ required: true, message: 'title is required', trigger: 'blur' }],
           category: [{ required: true, message: 'title is required', trigger: 'blur' }],
-          showIndex: [{ required: true, message: 'title is required', trigger: 'blur' }],
-        },
+          showIndex: [{ required: true, message: 'title is required', trigger: 'blur' }]
+        }
       }
     },
     created() {
@@ -166,7 +162,7 @@
     methods: {
       getChannel() {
         this.listLoading = true
-        getChannel(0).then(response => {
+        getChannel().then(response => {
           this.list = response.datas.list
           this.listLoading = false
         })
@@ -188,7 +184,7 @@
           this.$refs['dataForm'].clearValidate()
         })
       },
-      createData(){
+      createData() {
         this.$refs['dataForm'].validate((valid) => {
           if (valid) {
             saveChannel(this.temp).then(() => {
@@ -212,7 +208,7 @@
           this.$refs['dataForm'].clearValidate()
         })
       },
-      updateData(){
+      updateData() {
         this.$refs['dataForm'].validate((valid) => {
           if (valid) {
             saveChannel(this.temp).then(() => {

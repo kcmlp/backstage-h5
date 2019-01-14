@@ -104,7 +104,9 @@
         <el-form-item
           :label="'类别'"
           prop="category">
-          <el-input v-model="temp.category"/>
+          <el-input
+            :disabled="dialogStatus==='create'?false:true"
+            v-model="temp.category" />
         </el-form-item>
         <el-form-item
           :label="'是否显示'">

@@ -82,6 +82,18 @@ export const constantRouterMap = [
       }
     ]
   },
+  {
+    path: '/binding',
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        name: 'index',
+        component: () => import('@/views/binding/index'),
+        meta: { title: '账户绑定', icon: 'table' }
+      }
+    ]
+  },
   { path: '*', redirect: '/404', hidden: true }
 ]
 

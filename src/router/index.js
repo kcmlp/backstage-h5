@@ -48,7 +48,7 @@ export const constantRouterMap = [
         path: 'list',
         name: 'list',
         component: () => import('@/views/article/list'),
-        meta: { title: '用户列表', icon: 'table' }
+        meta: { title: '用户列表', icon: 'user' }
       }
       // {
       //   path: 'add',
@@ -66,7 +66,7 @@ export const constantRouterMap = [
         path: 'index',
         name: 'index',
         component: () => import('@/views/channel/index'),
-        meta: { title: '频道列表', icon: 'table' }
+        meta: { title: '频道列表', icon: 'channel' }
       }
     ]
   },
@@ -78,7 +78,7 @@ export const constantRouterMap = [
         path: 'index',
         name: 'index',
         component: () => import('@/views/version/index'),
-        meta: { title: '版本设置', icon: 'table' }
+        meta: { title: '版本设置', icon: 'version' }
       }
     ]
   },
@@ -90,7 +90,31 @@ export const constantRouterMap = [
         path: 'index',
         name: 'index',
         component: () => import('@/views/binding/index'),
-        meta: { title: '账户绑定', icon: 'table' }
+        meta: { title: '账户绑定', icon: 'binding' }
+      }
+    ]
+  },
+  {
+    path: '/task',
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        name: 'index',
+        component: () => import('@/views/task/index'),
+        meta: { title: '任务管理', icon: 'task' }
+      }
+    ]
+  },
+  {
+    path: '/gift',
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        name: 'index',
+        component: () => import('@/views/gift/index'),
+        meta: { title: '礼物管理', icon: 'gift' }
       }
     ]
   },

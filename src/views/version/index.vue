@@ -17,7 +17,7 @@
 
 <script>
   import JsonEditor from '@/components/JsonEditor'
-  import { getAppVersion, saveVersion } from '@/api/appVersion'
+  import { getAppVersion, saveVersion } from '@/api/version'
 
   export default {
     name: 'JsonEditorDemo',
